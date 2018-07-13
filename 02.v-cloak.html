@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>index</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+    <style>
+    [v-cloak]{
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <p v-cloak>###{{mag}}**</p>
+        <h4 v-text='mag'></h4>
+        <div v-html='mag2'>加载中...</div>
+        <!-- <input type="button" value="按钮" v-bind:title="mytitle+'123'">
+        <input type="button" value="按钮" :title="mytitle+'456'"> -->
+        <!-- <input type="button" value="按钮" :title="mytitle+'456'" v-on:click="show"> -->
+        <input type="button" value="按钮" :title="mytitle+'456'" @click="show">
+    </div>
+    <script src="./lib/vue-2.5.17-beta.0/dist/vue.js">
+    </script>
+    <script> 
+
+    var vm =new Vue({
+        el:'#app',
+     
+        data:{ 
+            mag:'12345!',
+            mag2:'<h1>哈哈哈,这是一个大大的H1</h1>',
+            mytitle:'这是一个自定义title'
+        },
+        methods:{
+            show:function(){
+                alert("hello")
+            }
+        }
+    })
+    </script>
+</body >
+
+</html >      

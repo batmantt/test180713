@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>index</title>
+    <script src="./lib/vue-2.5.17-beta.0/dist/vue.js">
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+</head>
+
+<body>
+
+    <!-- 视图层 -->
+    <div id="app">
+        {{mag}}
+        <div>
+            <p v-for="(item,i) in list1">值：{{item}}----索引：{{i}}</p>
+            <p v-for="(user,i) in list2">id:{{user.id}}---name:{{user.name}}---索引：{{i}}</p>
+            <p v-for="(val,key,i) in usero">{{key}}---{{val}}---{{i}}</p>
+            <p v-for="count in 10">这是第{{count}}次循环</p>
+        </div>
+    </div>
+
+    <!-- 创建vue实例 -->
+    <script> 
+
+        // 我们创建出来的vm对象 就是我们mvvm中的vm调度者
+        var vm = new Vue({
+            el: '#app',
+            // 这里的data就是mvvm中的M 专门用来宝翠娜每个页面的数据
+            data: {
+                mag: '欢迎使用Vue',
+                list1: [1, 2, 3, 4, 5, 6],
+                list2: [
+                    { id: 1, name: 'zs1' },
+                    { id: 2, name: 'zs2' },
+                    { id: 3, name: 'zs3' },
+                    { id: 4, name: 'zs4' },
+                ],
+                usero: {
+                    id: 1,
+                    name: '小老虎',
+                    gender: '男'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

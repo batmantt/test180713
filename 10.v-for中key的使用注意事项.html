@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>index</title>
+    <script src="./lib/vue-2.5.17-beta.0/dist/vue.js">
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+</head>
+
+<body>
+
+    <!-- 视图层 -->
+    <div id="app">
+        {{mag}}
+        <div>
+
+            <label>id:
+                <input type="text" v-model="id">
+            </label>
+            <label>name:
+                <input type="text" v-model="name">
+            </label>
+            <input type="button" value="添加" @click="add">
+        </div>
+        <!-- key只能使用number或string 必须使用属性绑定 v-bind -->
+        <p v-for="item in list" :key="item.id">
+            <input type="checkbox">{{item.id}}----{{item.name}}
+        </p>
+    </div>
+
+    <!-- 创建vue实例 -->
+    <script> 
+
+        // 我们创建出来的vm对象 就是我们mvvm中的vm调度者
+        var vm = new Vue({
+            el: '#app',
+            // 这里的data就是mvvm中的M 专门用来宝翠娜每个页面的数据
+            data: {
+                mag: '欢迎使用Vue',
+                list: [
+                    { id: 1, name: '李斯' },
+                    { id: 2, name: '嬴政' },
+                    { id: 3, name: '赵高' },
+                    { id: 4, name: '韩非' },
+                    { id: 5, name: '荀子' },
+                ],
+                id: '',
+                name: '',
+            },
+            methods: {
+                add() {
+                    // this.list.push({id:this.id,name:this.name})
+                    this.list.unshift({ id: this.id, name: this.name })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>index</title>
+    <script src="./lib/vue-2.5.17-beta.0/dist/vue.js">
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+    <style>
+        .inner {
+            background-color: lightblue;
+            height: 150px;
+        }
+
+        #outer {
+            padding: 40px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 视图层 -->
+    <div id="app">
+        <!-- <div class="inner" @click="divHandler"> -->
+        <!-- stop阻止事件冒泡 -->
+        <!-- <input type="button" name="" id="" value="戳他" @click.stop="btnHandler"> -->
+        <!-- </div> -->
+        <!-- prevent 阻止默认事件 -->
+        <!-- <a href="https://www.baidu.com" @click.prevent="clicklink">有问题，先百度</a> -->
+        <!-- capture实现捕获触发事件 -->
+        <!-- <div class="inner" @click.capture="divHandler">
+                <input type="button" name="" id="" value="戳他" @click="btnHandler">
+            </div> -->
+
+        <!-- self实现只有点击当前元素才会触发事件 -->
+        <!-- <div class="inner" @click.self="divHandler">
+            <input type="button" name="" id="" value="戳他" @click="btnHandler">
+        </div> -->
+        <!-- 使用.once只出发一次 -->
+        <!-- <a href="https://www.baidu.com" @click.prevent.once="clicklink">有问题，先百度</a> -->
+        <div id="outer" @click.self="divouterHand">
+            <div class="inner" @click="divHandler">
+                <input type="button" name="" id="" value="戳他" @click="btnHandler">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 创建vue实例 -->
+    <script> 
+
+        // 我们创建出来的vm对象 就是我们mvvm中的vm调度者
+        var vm = new Vue({
+            el: '#app',
+            // 这里的data就是mvvm中的M 专门用来宝翠娜每个页面的数据
+            data: {
+                mag: '你好~欢迎学习vue!'
+            },
+            methods: {
+                divHandler() {
+                    console.log("这是触发innerdiv时间")
+                },
+                btnHandler() {
+                    console.log("这是触发按钮时间")
+                },
+                clicklink() {
+                    console.log("点击超链接")
+                },
+                divouterHand() {
+                    console.log("点击divouterHand")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

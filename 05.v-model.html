@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>index</title>
+    <script src="./lib/vue-2.5.17-beta.0/dist/vue.js">
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+</head>
+
+<body>
+
+    <!-- 视图层 -->
+    <div id="app">
+        <h4>{{msg}}</h4>
+        <!-- <input type="text" v-bind:value="msg" style="width: 100%"> -->
+
+        <!-- 使用model指令 可以实现表单元素和model中的数据双向绑定 -->
+        <!-- 注意：v-model只能运用在表单元素中 -->
+        <input type="text" v-model="msg" style="width: 100%">
+    </div>
+
+    <!-- 创建vue实例 -->
+    <script> 
+
+        // 我们创建出来的vm对象 就是我们mvvm中的vm调度者
+        var vm = new Vue({
+            el: '#app',
+            // 这里的data就是mvvm中的M 专门用来宝翠娜每个页面的数据
+            data: {
+                msg: '大家都是好学生 爱敲代码爱学习爱思考没瑕疵!'
+            }
+        })
+    </script>
+</body>
+
+</html>

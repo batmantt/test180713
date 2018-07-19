@@ -15,9 +15,6 @@
 <body>
     <div id="app">
         {{mag}}
-
-
-
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">添加品牌</h3>
@@ -29,13 +26,14 @@
                 </label>
                 <label>
                     Name:
-                    <input type="text" class="form-contorl" v-model="name">
+                    <!-- 按键修饰符 -->
+                    <input type="text" class="form-contorl" v-model="name" @keyup.f2="add">
                 </label>
                 <!-- 使用事件绑定机制 处理函数时 如果加上小括号 就可以传参了 -->
                 <input type="button" value="添加" class="btn btn-primary" @click="add()">
                 <label>
                     搜索名称关键字:
-                    <input type="text" class="form-contorl" v-model="keywords">
+                    <input type="text" class="form-contorl" v-model="keywords" v-focus v-color="'yellow  '">
                 </label>
             </div>
         </div>
@@ -56,20 +54,63 @@
                 <tr v-for="item in search(keywords)" :key="item.id">
                     <td>{{item.id}}</td>
                     <td v-text="item.name"></td>
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.ctime |dataFormat}}</td>
                     <td>
                         <a href="" @click.prevent="del(item.id)">删除</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+    </div>
 
+    <div id="app2">
+        <h1>{{dt|dataFormat}}</h1>
     </div>
     <script> 
-        // 我们创建出来的vm对象 就是我们mvvm中的vm调度者
+        //自定义键盘吗
+        Vue.config.keyCodes.f2 = 113
+        //定义全局指令 参数1 是指令的名称  参数2是一个对象 有一些指令相关的函数  
+        Vue.directive('focus', {
+            //  每当指令绑定到元素的时候，就会立即执行bind函数 并且只执行一次
+            bind: function (el) {
+                // el.focus()
+            },
+            // 元素插入DOM中时 执行inserted函数 指出发一次
+            inserted: function (el) {
+                el.focus()
+            },
+            // 当VNode更新的时候 会执行update 可能会执行多次
+            updated: function () { }
+        })
+
+
+        Vue.directive("color", {
+            bind: function (el,binding) {
+                // el.style.color = 'red'
+                el.style.color =binding.value
+            }
+        })
+
+        //全局过滤器
+        Vue.filter('dataFormat', function (datastr, pattern = '') {
+            // 根据给定的字符串 得出特定时间
+            var dt = new Date(datastr)
+            var y = dt.getFullYear()
+            var m = dt.getMonth() + 1
+            var d = dt.getDate()
+            // return y + '-' + m + '-' + d
+            // 模板字符串
+            if (pattern.toLowerCase() == 'yyy-mm-dd') {
+                return `${y}-${m}-${d}`
+            } else {
+                var hh = dt.getHours()
+                var mm = dt.getMinutes()
+                var ss = dt.getSeconds()
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+        })
         var vm = new Vue({
             el: '#app',
-            // 这里的data就是mvvm中的M 专门用来宝翠娜每个页面的数据
             data: {
                 mag: '欢迎使用Vue',
                 id: '',
@@ -88,14 +129,6 @@
                     this.id = this.name = ''
                 },
                 del(id) {
-                    // 如何根据id 找到要i删除项的索引
-                    // 直接调用数组的splice的方法
-                    // this.list.some((item, i) => {
-                    //     if (item.id == id) {
-                    //         this.list.splice(i, 1)
-                    //         return true;
-                    //     }
-                    // })
                     var index = this.list.findIndex(item => {
                         if (item.id == id) {
                             return true;
@@ -104,17 +137,7 @@
                     this.list.splice(index, 1)
                 },
                 search(keywords) {
-                    // var newlist = []
-                    // this.list.forEach(item => {
-                    //     if (item.name.indexOf(keywords) != -1) {
-                    //         newlist.push(item)
-                    //     }
-                    // })
-                    // return newlist
-                    //注意 ：foreach some filter findindex 这些都是属于数组的新方法
-                    //都会对数组中的每一项进行遍历，执行相关的操作
                     return this.list.filter(item => {
-                        // if (item.name.indexOf(keywords)!=-1)
                         if (item.name.includes(keywords)) {
                             return item
                         }
@@ -122,6 +145,32 @@
                 }
             }
         })
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                dt: new Date()
+            },
+            // 局部过滤器
+            filters: {
+                dataFormat: function (datastr, pattern = '') {
+                    var dt = new Date(datastr)
+                    var y = dt.getFullYear()
+                    var m = (dt.getMonth() + 1).toString().padStart(2, '0')
+                    var d = dt.getDate()
+                    // return y + '-' + m + '-' + d
+                    // 模板字符串
+                    if (pattern.toLowerCase() == 'yyy-mm-dd') {
+                        return `${y}-${m}-${d}`
+                    } else {
+                        var hh = dt.getHours()
+                        var mm = dt.getMinutes()
+                        var ss = dt.getSeconds()
+                        return `${y}-${m}-${d} ${hh}:${mm}:${ss}~~~~~`
+                    }
+                }
+            }
+        })
+
     </script>
 </body>
 

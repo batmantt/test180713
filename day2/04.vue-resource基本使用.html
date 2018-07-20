@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../lib/vue-2.5.17-beta.0/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="get请求" @click="getInfo">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                getInfo() {
+                    // this.$http.get('https://www.baidu.com').then(function (result) {
+                    //     console.log(result)
+                    // })
+                    // GET /someUrl
+                    this.$http.get('https://yyc.tango007.com/yyc/Image/ImageList').then(response => {
+
+                        // get body data
+                        console.log("000");
+                        console.log(response.body);
+
+                    }, response => {
+                        // error callback
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

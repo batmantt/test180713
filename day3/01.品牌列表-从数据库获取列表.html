@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../lib/vue-2.5.17-beta.0/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Id:
+                    <input type="text" v-model="id">
+                </label>
+                <label>
+                    Name:
+                    <input type="text" v-model="name" class="form-control">
+                </label>
+                <input type="button" value="添加" @click="add" class="btn-primary">
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list " :key="item.id">
+                    <td>{{item.commodityNumber}}</td>
+                    <td>{{item.commodityDetails}}</td>
+                    <td>{{item.commodityStartTime}}</td>
+                    <td>
+                        <a href="" @click.prevent="del(item.commodityNumber)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+
+        Vue.http.options.root = "https://yyc.tango007.com/yyc/";
+        Vue.http.options.emulateJSON = true;
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                id: '',
+                list: [
+                    { id: 1, name: '五菱宏光', ctime: new Date() },
+                    { id: 2, name: '五菱宏光', ctime: new Date() }
+                ]
+            },
+            created() {
+                this.getAllList()
+            },
+            methods: {
+                getAllList() {
+                    this.$http.get('Commodity/CommodityList').then(function (res) {
+                        if (res.status == "200") {
+                            this.list = res.body.list
+                            console.log('查询成功')
+                        } else {
+                            alert("出错啦！")
+                        }
+                    })
+                },
+                // post请求
+                add() {
+                    this.$http.post('', { name: this.name }, { emulateJSON: true }).then(function (res) {
+                        if (status == 0) {
+                            this.getAllList(),
+                                this.name = ''
+                        } else {
+                            alert("添加失败！")
+                        }
+                    })
+                },
+                // del(id) {//删除
+                //     console.log(id)
+                //     this.$http.post('yyc/Commodity/RemoveGoods', { commodityNumber: id }, { emulateJSON: true }).then(function (res) {
+                //         console.log(res)
+                //         this.getAllList()
+                //     })
+                // }
+                del(id) {//删除
+                    console.log(id)
+                    // this.$http.post('Commodity/RemoveGoods', { commodityNumber: id }).then(function (res) {
+                    //     console.log(res)
+                    //     this.getAllList()
+                    // })
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

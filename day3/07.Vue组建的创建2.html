@@ -15,24 +15,15 @@
 <body>
     <div id="app">
         <!-- 如果要使用组建 直接把组建名称引入 -->
-        <my-com1></my-com1>
+        <my-com2></my-com2>
         {{msg}}
     </div>
 
     <script>
-        // // 1.1使用vue.extend来创建全局vue组建
-        // var com1 = Vue.extend({
-        //     // template 是要返回的内容
-        //     template: '<h3>这是使用Vue.extend创建的组件</h3>'
-        // })
-        // //1.2使用vue.extend('组件名称'，创建出来的组建模板对象)
-        // // 如果使用驼峰命名 则引用组建是需要将大写驼峰改为小写字母，两个单词之间使用-连接 如果不使用驼峰 直接用组建原名
-        // Vue.component('myCom1', com1)
-
-        // 简写方式
-        Vue.component('myCom1' ,Vue.extend({
-            template: '<h3>这是使用Vue.extend创建的组件方式。。。</h3>'
-        }))
+        Vue.component('myCom2', {
+            // 注意 template属性指向的模板内容 只能由一个根元素
+            template: '<div><h3>这是使用Vue.component创建的组件</h3><span>123</span></div>'
+        })
         var vm = new Vue({
             el: "#app",
             data: {

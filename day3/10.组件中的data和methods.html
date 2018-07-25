@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../lib/vue-2.5.17-beta.0/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@3.5.2/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+
+<body>
+    <div id="app">
+        <counter></counter>
+        <hr>
+        <counter></counter>
+        <hr>
+        <counter></counter>
+        <hr>
+    </div>
+    <template id='tmp1'>
+        <div>
+            <input type="button" value="+1" @click='addnumber'>
+            <div>{{count}}</div>
+        </div>
+    </template>
+    <script>
+        var dataObj = { count: 0 }
+        Vue.component('counter', {
+            // 注意 template属性指向的模板内容 只能由一个根元素 使用方式和实例中的data完全一样
+            template: '#tmp1',
+            // 问题 为什么组件中的data必须是一个方法????
+
+            data: function () {
+                // 组建可以有自己的data数据 必须是一个方法 必须返回一个对象
+                // return dataObj  (存在数据共享问题)
+                //每次调用组件 都是新开辟一个对象 都是独有的 不是共享的
+                return {
+                    count:0
+                }
+            },
+            methods: {
+                addnumber() {
+                    this.count++
+                }
+            }
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "hello"
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../lib/vue-2.5.17-beta.0/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@3.5.2/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px)
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <a href="" @click.prevent="flag=true">登陆</a>
+        <a href="" @click.prevent="flag=false">注册</a>  -->
+        <!-- <login v-if="flag"></login>
+        <register v-else=""></register> -->
+        <a href="" @click.prevent="comName='login'">登陆</a>
+        <a href="" @click.prevent="comName='register'">注册</a>
+        <!-- 通过component 来展示对应名称的组件component是一个占位符  -->
+        <!-- is是要展示的组件名称 -->
+
+        <!-- mode属性设置组件切换模式 -->
+        <transition mode='out-in'>
+            <component :is="comName"></component>
+        </transition>
+
+        <!-- 当前学习的vue的标签有:
+        component  template  transition transitionGroup
+        -->
+    </div>
+    <script>
+        Vue.component('login', {
+            template: '<h3>登陆组件</h3>'
+        })
+        Vue.component('register', {
+            template: '<h3>注册组件</h3>'
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+                comName: 'login'
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -10,21 +10,47 @@
     <script src="../lib/vue-2.5.17-beta.0/dist/vue.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/animate.css@3.5.2/animate.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <style>
+        .ball {
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        {{msg}}
+        <input type="button" value='加入购物车' @click="flag=!flag">
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
     </div>
 
     <script>
         var vm = new Vue({
             el: "#app",
             data: {
-                msg: "hello"
+                msg: "hello",
+                flag: false
             },
             methods: {
-
+                beforeEnter(el) {
+                    el.style.transform = 'translate(0,0)'
+                },
+                enter(el, done) {
+                    el.offsetWidth
+                    el.style.transform = 'translate(150px,450px)'
+                    el.style.transition = 'all 1s ease'
+                    done()
+                },
+                afterEnter(el) {
+                    his.flag = !this.flag
+                    //el.style.opacity = 0.5
+                    // Vue把一个完整的动画拆分为两部分 我们用flag标识符切换动画
+                    // flag = false ==> flag=true
+                }
             }
         })
     </script>
